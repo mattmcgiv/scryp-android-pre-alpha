@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Scryp</string>
+    <string name="title_activity_qr">QrActivity</string>
 </resources>
