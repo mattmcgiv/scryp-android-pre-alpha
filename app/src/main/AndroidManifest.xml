@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".QrActivity"
+            android:name=".QRActivity"
             android:label="@string/title_activity_qr"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
