@@ -29,8 +29,9 @@ public class QRActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
-        new IntentIntegrator(this).initiateScan(); // `this` is the current Activity
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setOrientationLocked(false);
+        integrator.initiateScan(); // `this` is the current Activity
 
     }
 
@@ -42,7 +43,13 @@ public class QRActivity extends AppCompatActivity {
             if(result.getContents() == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+
+
+                //Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                String qrContent = result.getContents();
+                Intent intent = new Intent(this, ConfirmTransactionActivity.class);
+                intent.putExtra("qrContent", qrContent);
+                startActivity(intent);
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

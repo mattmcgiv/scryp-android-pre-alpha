@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Scryp</string>
     <string name="title_activity_qr">QrActivity</string>
+    <string name="title_activity_confirm_transaction">ConfirmTransactionActivity</string>
+    <string name="no_data">No data :(</string>
+    <string name="item_label">Item</string>
+    <string name="total_price_label">Total Price</string>
+    <string name="scryp_deal_label">Scryp Deal</string>
 </resources>
