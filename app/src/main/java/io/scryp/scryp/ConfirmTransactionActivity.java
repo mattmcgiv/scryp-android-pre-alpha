@@ -1,12 +1,9 @@
 package io.scryp.scryp;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,15 +21,6 @@ public class ConfirmTransactionActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         String qrContent;
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -40,7 +28,6 @@ public class ConfirmTransactionActivity extends AppCompatActivity {
                 qrContent = null;
             } else {
                 qrContent = extras.getString("qrContent");
-                //Log.v(TAG, qrContent);
                 try {
                     JSONObject qrJSON = getJSONObj(qrContent);
 
