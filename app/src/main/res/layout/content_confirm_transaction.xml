@@ -87,5 +87,24 @@
         android:text="@string/no_data"
         />
 
+    <Button
+        android:id="@+id/payButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:layout_marginBottom="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/scryp_deal_description" />
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:layout_marginStart="11dp"
+        android:layout_alignBaseline="@+id/payButton"
+        android:layout_alignBottom="@+id/payButton"
+        android:layout_toEndOf="@+id/payButton" />
+
 
 </RelativeLayout>
