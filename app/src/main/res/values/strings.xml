@@ -8,4 +8,5 @@
     <string name="scryp_deal_label">Scryp Deal</string>
     <string name="pay">Pay</string>
     <string name="cancel">Cancel</string>
+    <string name="title_activity_transaction_complete">TransactionCompleteActivity</string>
 </resources>
