@@ -6,4 +6,6 @@
     <string name="item_label">Item</string>
     <string name="total_price_label">Total Price</string>
     <string name="scryp_deal_label">Scryp Deal</string>
+    <string name="pay">Pay</string>
+    <string name="cancel">Cancel</string>
 </resources>

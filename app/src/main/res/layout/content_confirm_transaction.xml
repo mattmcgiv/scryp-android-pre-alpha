@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/content_confirm_transaction"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="io.scryp.scryp.ConfirmTransactionActivity"
-    tools:showIn="@layout/activity_confirm_transaction"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/content_confirm_transaction"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:context="io.scryp.scryp.ConfirmTransactionActivity"
+                tools:showIn="@layout/activity_confirm_transaction"
     >
 
     <TextView
@@ -88,23 +88,26 @@
         />
 
     <Button
-        android:id="@+id/payButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        android:layout_marginBottom="16dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/scryp_deal_description" />
-
-    <Button
         android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        android:layout_marginStart="11dp"
         android:layout_alignBaseline="@+id/payButton"
         android:layout_alignBottom="@+id/payButton"
-        android:layout_toEndOf="@+id/payButton" />
+        android:layout_alignStart="@+id/scryp_deal_description"
+        android:layout_marginStart="11dp"
+        android:text="@string/cancel"
+        />
+
+
+    <Button
+        android:id="@+id/payButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:layout_toEndOf="@+id/cancelButton"
+        android:text="@string/pay"
+        />
 
 
 </RelativeLayout>

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,6 +67,14 @@ public class ConfirmTransactionActivity extends AppCompatActivity {
             qrContent= (String) savedInstanceState.getSerializable("qrContent");
             Toast.makeText(this, "Scanned: " + qrContent, Toast.LENGTH_LONG).show();
         }
+
+        final Button button = (Button) findViewById(R.id.payButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                //TODO intent to new activity
+            }
+        });
     }
 
     private JSONObject getJSONObj (String json)throws JSONException {
