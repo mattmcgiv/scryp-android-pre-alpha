@@ -61,7 +61,7 @@
 
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/homeButton"
         android:layout_width="144dp"
         android:layout_height="64dp"
         android:layout_alignParentBottom="true"
