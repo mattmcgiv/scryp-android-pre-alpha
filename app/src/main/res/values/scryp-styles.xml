@@ -9,4 +9,12 @@
     <style name="scrypLabelText">
         <item name="android:textSize">24dp</item>
     </style>
+
+    <style name="scrypLabelTextSmall">
+        <item name="android:textSize">16dp</item>
+    </style>
+
+    <style name="scrypHeadlineText">
+        <item name="android:textSize">64dp</item>
+    </style>
 </resources>
