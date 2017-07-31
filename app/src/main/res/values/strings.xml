@@ -15,4 +15,6 @@
     <string name="paymentStatus">Payment status</string>
     <string name="homeText">Home</string>
     <string name="confirmPaymentText">Confirm payment</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="scrypPreAlphaText">Scryp Pre-Alpha</string>
 </resources>
