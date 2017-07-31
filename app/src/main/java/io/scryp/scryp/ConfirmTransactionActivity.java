@@ -21,6 +21,7 @@ public class ConfirmTransactionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_transaction);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.confirmPaymentText);
         setSupportActionBar(toolbar);
 
         String qrContent;

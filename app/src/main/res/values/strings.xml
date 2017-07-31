@@ -14,4 +14,5 @@
     <string name="debitedText">has been debited from your wallet.</string>
     <string name="paymentStatus">Payment status</string>
     <string name="homeText">Home</string>
+    <string name="confirmPaymentText">Confirm payment</string>
 </resources>
