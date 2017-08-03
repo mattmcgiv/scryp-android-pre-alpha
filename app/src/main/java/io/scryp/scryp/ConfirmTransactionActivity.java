@@ -1,5 +1,6 @@
 package io.scryp.scryp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -69,11 +70,11 @@ public class ConfirmTransactionActivity extends AppCompatActivity {
             Toast.makeText(this, "Scanned: " + qrContent, Toast.LENGTH_LONG).show();
         }
 
-        final Button button = (Button) findViewById(R.id.payButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button payButton = (Button) findViewById(R.id.payButton);
+        payButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                //TODO intent to new activity
+                Intent intent = new Intent(v.getContext(), TransactionCompleteActivity.class);
+                v.getContext().startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             }
         });
     }

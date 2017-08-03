@@ -14,4 +14,35 @@
                 tools:showIn="@layout/activity_main"
     >
 
+
+    <TextView
+        android:id="@+id/currentBalanceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="118dp"
+        android:text="Current Balance"
+        />
+
+    <TextView
+        android:id="@+id/balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/currentBalanceLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="34dp"
+        android:text="$c20.00"
+        android:textAppearance="@style/scrypHeadlineText"
+        />
+
+    <Button
+        android:id="@+id/scanADeal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="107dp"
+        android:text="Scan a Deal"
+        />
 </RelativeLayout>

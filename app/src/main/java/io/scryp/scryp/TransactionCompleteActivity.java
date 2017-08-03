@@ -23,7 +23,7 @@ public class TransactionCompleteActivity extends AppCompatActivity {
         Button homeButton = (Button) findViewById(R.id.homeButton);
         homeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ConfirmTransactionActivity.class);
+                Intent intent = new Intent(v.getContext(), MainActivity.class);
                 v.getContext().startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             }
         });
