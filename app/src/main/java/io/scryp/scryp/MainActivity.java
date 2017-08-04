@@ -2,6 +2,7 @@ package io.scryp.scryp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -40,6 +41,16 @@ public class MainActivity extends AppCompatActivity {
                 v.getContext().startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             }
         });
+
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras != null) {
+                String message = (String) extras.getString("message");
+                CoordinatorLayout cl = (CoordinatorLayout) findViewById(R.id.mainActivityCoordLayout);
+                Snackbar sb = Snackbar.make(cl, message, Snackbar.LENGTH_SHORT);
+                sb.show();
+            }
+        }
     }
 
 }

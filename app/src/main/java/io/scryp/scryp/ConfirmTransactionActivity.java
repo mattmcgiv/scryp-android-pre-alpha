@@ -71,10 +71,21 @@ public class ConfirmTransactionActivity extends AppCompatActivity {
         }
 
         Button payButton = (Button) findViewById(R.id.payButton);
+        Button canxButton = (Button) findViewById(R.id.cancelButton);
+
         payButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), TransactionCompleteActivity.class);
                 v.getContext().startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            }
+        });
+
+        canxButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                CharSequence cs = getString(R.string.dealScanCanceled);
+                Intent intent = new Intent(v.getContext(), MainActivity.class);
+                intent.putExtra("message", cs);
+                v.getContext().startActivity(intent);
             }
         });
     }

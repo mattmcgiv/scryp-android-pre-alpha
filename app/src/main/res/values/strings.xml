@@ -11,10 +11,11 @@
     <string name="title_activity_transaction_complete">TransactionCompleteActivity</string>
     <string name="statusText">Done!</string>
     <string name="amountText">$c2.00</string>
-    <string name="debitedText">has been debited from your wallet.</string>
+    <string name="debitedText">has been debited from your wallet</string>
     <string name="paymentStatus">Payment status</string>
     <string name="homeText">Home</string>
     <string name="confirmPaymentText">Confirm payment</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="scrypPreAlphaText">Scryp Pre-Alpha</string>
+    <string name="dealScanCanceled">Deal scan canceled</string>
 </resources>
