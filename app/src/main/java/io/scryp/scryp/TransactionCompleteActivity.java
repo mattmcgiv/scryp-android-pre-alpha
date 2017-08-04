@@ -19,12 +19,14 @@ public class TransactionCompleteActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.paymentStatus);
         setSupportActionBar(toolbar);
 
+        //todo replace hard-coded 2.00 with reference to deal
+        MockScrypAccount.getInstance().setBalance(MockScrypAccount.getInstance().getBalance() - 2.00);
 
         Button homeButton = (Button) findViewById(R.id.homeButton);
         homeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MainActivity.class);
-                v.getContext().startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                v.getContext().startActivity(intent);
             }
         });
     }

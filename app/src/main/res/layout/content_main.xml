@@ -29,7 +29,6 @@
         android:id="@+id/balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="$c20.00"
         android:textAppearance="@style/scrypHeadlineText"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"

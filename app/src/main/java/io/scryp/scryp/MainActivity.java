@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
         // finally change the color
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorBlack));
 
+        TextView balanceText = (TextView) findViewById(R.id.balance);
+        balanceText.setText(getString(R.string.scrypSymbol) + String.format(java.util.Locale.US,"%.2f", MockScrypAccount.getInstance().getBalance()));
+
         Button scanADealButton = (Button) findViewById(R.id.scanADeal);
         scanADealButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -46,9 +50,16 @@ public class MainActivity extends AppCompatActivity {
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
                 String message = (String) extras.getString("message");
-                CoordinatorLayout cl = (CoordinatorLayout) findViewById(R.id.mainActivityCoordLayout);
-                Snackbar sb = Snackbar.make(cl, message, Snackbar.LENGTH_SHORT);
-                sb.show();
+                if (message != null) {
+                    CoordinatorLayout cl = (CoordinatorLayout) findViewById(R.id.mainActivityCoordLayout);
+                    Snackbar sb = Snackbar.make(cl, message, Snackbar.LENGTH_SHORT);
+                    sb.show();
+                }
+                String balance = (String) extras.getString("balance");
+                if (balance != null) {
+
+                    balanceText.setText(balance);
+                }
             }
         }
     }

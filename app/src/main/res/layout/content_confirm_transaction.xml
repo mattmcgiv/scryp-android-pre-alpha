@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/recipient_name"
         android:layout_below="@+id/recipient_name"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="32dp"
         android:text="@string/item_label"
         android:textAppearance="@style/scrypLabelText"
         />
@@ -53,8 +53,9 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/recipient_name"
         android:layout_below="@+id/item_ui_label"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="80dp"
         android:text="@string/total_price_label"
+        android:textAppearance="@style/scrypLabelText"
         />
 
     <TextView
@@ -73,8 +74,9 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/recipient_name"
         android:layout_below="@+id/total_price_ui_label"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="80dp"
         android:text="@string/scryp_deal_label"
+        android:textAppearance="@style/scrypLabelText"
         />
 
     <TextView
@@ -89,7 +91,7 @@
 
     <Button
         android:id="@+id/cancelButton"
-        android:layout_width="96dp"
+        android:layout_width="112dp"
         android:layout_height="64dp"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/scryp_deal_description"
@@ -103,7 +105,7 @@
 
     <Button
         android:id="@+id/payButton"
-        android:layout_width="96dp"
+        android:layout_width="112dp"
         android:layout_height="64dp"
         android:layout_alignTop="@+id/cancelButton"
         android:layout_marginStart="18dp"
