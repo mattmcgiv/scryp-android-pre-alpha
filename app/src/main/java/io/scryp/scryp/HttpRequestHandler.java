@@ -15,7 +15,7 @@ import com.android.volley.toolbox.Volley;
  */
 
 public class HttpRequestHandler {
-    public static final String TAG = "VolleyMMM";
+    public static final String TAG = "Scryp";
     HttpRequestHandler(Context c) {
 
         // Instantiate the RequestQueue.

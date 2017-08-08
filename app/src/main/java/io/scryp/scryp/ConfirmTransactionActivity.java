@@ -15,7 +15,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 public class ConfirmTransactionActivity extends AppCompatActivity {
-    private static final String TAG = "CnfrmTrnsActivity";
+    private static final String TAG = "Scryp";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

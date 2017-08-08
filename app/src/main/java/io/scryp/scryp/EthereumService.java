@@ -16,7 +16,7 @@ import android.util.Log;
 
 public class EthereumService extends IntentService {
 
-    private static final String TAG = "EthereumService";
+    private static final String TAG = "Scryp";
 
     private static final String INIT_NEW_TRANSACTION = "io.scryp.scryp.action.INIT_NEW_TRANSACTION";
     private static final String SEND_SIGNED_TRANSACTION = "io.scryp.scryp.action.SEND_SIGNED_TRANSACTION";
