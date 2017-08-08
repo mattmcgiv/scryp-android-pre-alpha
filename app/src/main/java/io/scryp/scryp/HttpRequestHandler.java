@@ -7,8 +7,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
 
 /**
  * Created by Matt on 8/7/2017.
@@ -36,7 +39,21 @@ public class HttpRequestHandler {
                Log.v(TAG, "That didn't work!");
             }
         });
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.v(TAG, response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //todo add error handling here
+            }
+        });
+
         // Add the request to the RequestQueue.
-        queue.add(stringRequest);
+        queue.add(jsObjRequest);
     }
 }
