@@ -30,40 +30,28 @@ public class ConfirmTransactionActivity extends AppCompatActivity {
             Bundle extras = getIntent().getExtras();
             if(extras == null) {
                 qrContent = null;
+                //TODO dev only remove this
+                qrContent = "{\n" +
+                        "   \"deal\": {\n" +
+                        "       \"id\": \"123xyz\",\n" +
+                        "       \"total\": \"4.50\",\n" +
+                        "       \"usd_amount\": \"2.50\",\n" +
+                        "       \"scryp_amount\": \"2.00\",\n" +
+                        "       \"items\": {\n" +
+                        "           \"item_0\": {\n" +
+                        "               \"name\": \"16oz. Latte\"\n" +
+                        "           }\n" +
+                        "       }\n" +
+                        "   },\n" +
+                        "   \"recipient\": {\n" +
+                        "       \"id\": \"456zyx\",\n" +
+                        "       \"name\": \"Local Coffee Co.\"\n" +
+                        "   }\n" +
+                        "}";
+                updateView(qrContent);
             } else {
                 qrContent = extras.getString("qrContent");
-                try {
-                    JSONObject qrJSON = getJSONObj(qrContent);
-
-                    //Set recipient name in UI
-                    TextView recipientTxtVw = (TextView) findViewById(R.id.recipient_name);
-                    JSONObject recipientJSON = new JSONObject(qrJSON.getString("recipient"));
-                    recipientTxtVw.setText(recipientJSON.getString("name"));
-
-                    //Set item name in UI
-                    TextView itemTxtVw = (TextView) findViewById(R.id.item_description);
-                    JSONObject dealJSON = new JSONObject(qrJSON.getString("deal"));
-                    JSONObject itemsJSON = new JSONObject(dealJSON.getString("items"));
-                    JSONObject firstItemJSON = new JSONObject(itemsJSON.getString("item_0"));
-                    String item_name = firstItemJSON.getString("name");
-                    itemTxtVw.setText(item_name);
-
-                    //Set total price in UI
-                    TextView totalPriceTxtVw = (TextView) findViewById(R.id.total_price);
-                    String total = dealJSON.getString("total");
-                    totalPriceTxtVw.setText("$" + total);
-
-                    //Set Scryp deal in UI
-                    TextView dealTxtVw = (TextView) findViewById(R.id.scryp_deal_description);
-                    String dealText = "$" + dealJSON.getString("usd_amount")
-                            + " + "
-                            + "$c" + dealJSON.getString("scryp_amount");
-                    dealTxtVw.setText(dealText);
-
-                } catch (JSONException je) {
-                    Log.v(TAG, "JSONException:: " + je);
-                }
-
+                updateView(qrContent);
             }
         } else {
             qrContent= (String) savedInstanceState.getSerializable("qrContent");
@@ -92,6 +80,40 @@ public class ConfirmTransactionActivity extends AppCompatActivity {
 
     private JSONObject getJSONObj (String json)throws JSONException {
         return (JSONObject) new JSONTokener(json).nextValue();
+    }
+
+    private void updateView(String qrContent) {
+        try {
+            JSONObject qrJSON = getJSONObj(qrContent);
+
+            //Set recipient name in UI
+            TextView recipientTxtVw = (TextView) findViewById(R.id.recipient_name);
+            JSONObject recipientJSON = new JSONObject(qrJSON.getString("recipient"));
+            recipientTxtVw.setText(recipientJSON.getString("name"));
+
+            //Set item name in UI
+            TextView itemTxtVw = (TextView) findViewById(R.id.item_description);
+            JSONObject dealJSON = new JSONObject(qrJSON.getString("deal"));
+            JSONObject itemsJSON = new JSONObject(dealJSON.getString("items"));
+            JSONObject firstItemJSON = new JSONObject(itemsJSON.getString("item_0"));
+            String item_name = firstItemJSON.getString("name");
+            itemTxtVw.setText(item_name);
+
+            //Set total price in UI
+            TextView totalPriceTxtVw = (TextView) findViewById(R.id.total_price);
+            String total = dealJSON.getString("total");
+            totalPriceTxtVw.setText("$" + total);
+
+            //Set Scryp deal in UI
+            TextView dealTxtVw = (TextView) findViewById(R.id.scryp_deal_description);
+            String dealText = "$" + dealJSON.getString("usd_amount")
+                    + " + "
+                    + "$c" + dealJSON.getString("scryp_amount");
+            dealTxtVw.setText(dealText);
+
+        } catch (JSONException je) {
+            Log.v(TAG, "JSONException:: " + je);
+        }
     }
 
 }
