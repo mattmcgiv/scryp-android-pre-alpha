@@ -2,6 +2,7 @@ package io.scryp.scryp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -24,7 +25,6 @@ public class ConfirmTransactionActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.confirmPaymentText);
         setSupportActionBar(toolbar);
-
         String qrContent;
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();

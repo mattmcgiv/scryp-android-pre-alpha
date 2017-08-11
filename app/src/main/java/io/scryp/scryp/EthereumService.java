@@ -28,7 +28,7 @@ public class EthereumService extends IntentService {
     private static final String OUTPUT_ADDRESS = "io.scryp.scryp.extra.OUTPUT_ADDRESS";
     private static final String VALUE = "io.scryp.scryp.extra.VALUE";
 
-    private static final String BLOCK_CYPHER_TOKEN = new BlockCypher().TOKEN;
+    //private static final String BLOCK_CYPHER_TOKEN = new BlockCypher().TOKEN;
 
     public EthereumService() {
         super("EthereumService");
@@ -89,12 +89,24 @@ public class EthereumService extends IntentService {
      */
     private void handleActionInitNewTransaction(String inputAddress, String outputAddress, String value) {
         new HttpRequestHandler(this);
-        String status = "OK!";
-        Log.v(TAG, "creating localIntent with BROADCAST_ACTION");
+    }
+
+    //to be called from the HTTPRequestHandler to broadcast an update back to the UI
+    protected void handleSuccessfulJsonResponse(String response) {
+        Log.v(TAG, "response received...creating localIntent with BROADCAST_ACTION");
         Intent localIntent = new Intent(BROADCAST_ACTION)
-                .putExtra(RESPONSE_STATUS, status);
+                .putExtra(RESPONSE_STATUS, response);
         LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
     }
+
+    //to be called from the HTTPRequestHandler to broadcast an error message back to UI
+    protected void handleBadJsonResponse(String errorMessage) {
+        Log.v(TAG, "creating localIntent with BROADCAST_ACTION");
+        Intent localIntent = new Intent(BROADCAST_ACTION)
+                .putExtra(RESPONSE_STATUS, "error");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
+    }
+
 
     /**
      * Handle action Baz in the provided background thread with the provided
