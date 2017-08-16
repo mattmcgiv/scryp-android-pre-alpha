@@ -17,17 +17,15 @@
             android:name=".QrActivity"
             android:label="@string/title_activity_qr"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
             >
         </activity>
         <activity
             android:name=".ConfirmTransactionActivity"
             android:label="@string/title_activity_confirm_transaction"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
             >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
@@ -38,13 +36,19 @@
             android:name=".TransactionCompleteActivity"
             android:label="@string/title_activity_transaction_complete"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
             >
         </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
             >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
 
         <service
