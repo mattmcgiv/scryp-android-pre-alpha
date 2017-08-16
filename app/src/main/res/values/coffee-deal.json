@@ -1,0 +1,17 @@
+{
+  "deal": {
+    "id": "123xyz",
+    "total": "4.50",
+    "usd_amount": "2.50",
+    "scryp_amount": "2.00",
+    "items": {
+      "item_0": {
+        "name": "16oz. Latte"
+      }
+    }
+  },
+  "recipient": {
+    "id": "456zyx",
+    "name": "Local Coffee Co."
+  }
+}

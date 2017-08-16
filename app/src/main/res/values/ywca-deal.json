@@ -1,0 +1,17 @@
+{
+  "deal": {
+    "id": "123xyz",
+    "total": "20.00",
+    "usd_amount": "4.00",
+    "scryp_amount": "16.00",
+    "items": {
+      "item_0": {
+        "name": "Weekend Pass"
+      }
+    }
+  },
+  "recipient": {
+    "id": "456zyx",
+    "name": "YWCA"
+  }
+}

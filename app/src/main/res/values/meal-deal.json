@@ -1,0 +1,17 @@
+{
+  "deal": {
+    "id": "123xyz",
+    "total": "20.00",
+    "usd_amount": "12.00",
+    "scryp_amount": "8.00",
+    "items": {
+      "item_0": {
+        "name": "Entree and appetizer"
+      }
+    }
+  },
+  "recipient": {
+    "id": "456zyx",
+    "name": "Darcy's Bistro"
+  }
+}
