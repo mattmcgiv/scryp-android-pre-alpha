@@ -1,6 +1,7 @@
 package io.scryp.scryp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -15,8 +16,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import static io.scryp.scryp.MainActivity.PREFS_NAME;
+
 public class ConfirmTransactionActivity extends AppCompatActivity {
     private static final String TAG = "Scryp";
+    private float scryp_price = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +67,18 @@ public class ConfirmTransactionActivity extends AppCompatActivity {
 
         payButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                // We need an Editor object to make preference changes.
+                // All objects are from android.context.Context
+                SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+                float balance = settings.getFloat("scrypBalance", 44);
+                float newBalance = balance - scryp_price;
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putFloat("scrypBalance", newBalance);
+                // Commit the edits!
+                editor.commit();
+
                 Intent intent = new Intent(v.getContext(), TransactionCompleteActivity.class);
+                intent.putExtra("scrypPrice", scryp_price);
                 v.getContext().startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             }
         });
@@ -110,6 +125,8 @@ public class ConfirmTransactionActivity extends AppCompatActivity {
                     + " + "
                     + "$c" + dealJSON.getString("scryp_amount");
             dealTxtVw.setText(dealText);
+
+            scryp_price = Float.valueOf(dealJSON.getString("scryp_amount"));
 
         } catch (JSONException je) {
             Log.v(TAG, "JSONException:: " + je);

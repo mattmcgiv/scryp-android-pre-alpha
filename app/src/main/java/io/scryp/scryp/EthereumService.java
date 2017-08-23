@@ -41,7 +41,7 @@ public class EthereumService extends IntentService {
      * @see IntentService
      */
     // TODO: Customize helper method
-    public static void startActionInitNewTransaction(Context context, String inputAddress, String outputAddress, String value) {
+    public static void startActionInitNewTransaction(Context context, String inputAddress, String outputAddress, float value) {
         Log.v(TAG, "starting action InitNewTransaction");
         Intent intent = new Intent(context, EthereumService.class);
         intent.setAction(INIT_NEW_TRANSACTION);

@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -15,8 +16,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class TransactionCompleteActivity extends AppCompatActivity {
+
+    float transactionAmount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +31,9 @@ public class TransactionCompleteActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         hideSuccessContent();
 
-        EthereumService.startActionInitNewTransaction(this, "12345", "67890", "444");
+        Intent i = getIntent();
+        transactionAmount = i.getFloatExtra("scrypPrice", 0);
+        EthereumService.startActionInitNewTransaction(this, "12345", "67890", transactionAmount);
 
         // The filter's action is BROADCAST_ACTION
         IntentFilter statusIntentFilter = new IntentFilter(
@@ -57,8 +63,6 @@ public class TransactionCompleteActivity extends AppCompatActivity {
                 df.show(getSupportFragmentManager(), "ErrorDialog");
             }
             else {
-                //todo replace hard-coded 2.00 with reference to deal
-                MockScrypAccount.getInstance().setBalance(MockScrypAccount.getInstance().getBalance() - 2.00);
                 showSuccessContent();
             }
         }
@@ -71,6 +75,10 @@ public class TransactionCompleteActivity extends AppCompatActivity {
 
     private void showSuccessContent() {
         View v = findViewById(R.id.content_transaction_complete);
+        TextView debited = (TextView) findViewById(R.id.amountText);
+        Resources res = getResources();
+        String debitedText = res.getString(R.string.scryp_amount_text, transactionAmount);
+        debited.setText(debitedText);
         v.setVisibility(View.VISIBLE);
     }
 }
