@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -49,8 +50,10 @@ public class MainActivity extends AppCompatActivity {
         // finally change the color
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorBlack));
 
-        TextView balanceText = (TextView) findViewById(R.id.balance);
-        balanceText.setText(getString(R.string.scrypSymbol) + String.format(java.util.Locale.US,"%.2f", balance));
+        TextView balanceTextView = (TextView) findViewById(R.id.balance);
+        Resources res = getResources();
+        String balanceText = res.getString(R.string.scryp_amount_text, balance);
+        balanceTextView.setText(balanceText);
 
         Button scanADealButton = (Button) findViewById(R.id.scanADeal);
         scanADealButton.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     Snackbar sb = Snackbar.make(cl, message, Snackbar.LENGTH_SHORT);
                     sb.show();
                 }
-                balanceText.setText(R.string.scrypSymbol + String.valueOf(balance));
+                balanceTextView.setText(R.string.scrypSymbol + String.valueOf(balance));
             }
         }
     }
@@ -99,6 +102,10 @@ public class MainActivity extends AppCompatActivity {
         editor.putFloat("scrypBalance", 99);
         // Commit the edits!
         editor.commit();
+        TextView balanceTextView = (TextView) findViewById(R.id.balance);
+        Resources res = getResources();
+        String balanceText = res.getString(R.string.scryp_amount_text, 99f);
+        balanceTextView.setText(balanceText);
     }
 
 }
