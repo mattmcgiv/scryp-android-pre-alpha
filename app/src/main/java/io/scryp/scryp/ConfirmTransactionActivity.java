@@ -3,7 +3,6 @@ package io.scryp.scryp;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,9 +13,9 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import static io.scryp.scryp.MainActivity.PREFS_NAME;
+import static io.scryp.scryp.QRUtilities.*;
 
 public class ConfirmTransactionActivity extends AppCompatActivity {
     private static final String TAG = "Scryp";
@@ -34,28 +33,14 @@ public class ConfirmTransactionActivity extends AppCompatActivity {
             Bundle extras = getIntent().getExtras();
             if(extras == null) {
                 qrContent = null;
-                //TODO dev only remove this
-                qrContent = "{\n" +
-                        "   \"deal\": {\n" +
-                        "       \"id\": \"123xyz\",\n" +
-                        "       \"total\": \"4.50\",\n" +
-                        "       \"usd_amount\": \"2.50\",\n" +
-                        "       \"scryp_amount\": \"2.00\",\n" +
-                        "       \"items\": {\n" +
-                        "           \"item_0\": {\n" +
-                        "               \"name\": \"16oz. Latte\"\n" +
-                        "           }\n" +
-                        "       }\n" +
-                        "   },\n" +
-                        "   \"recipient\": {\n" +
-                        "       \"id\": \"456zyx\",\n" +
-                        "       \"name\": \"Local Coffee Co.\"\n" +
-                        "   }\n" +
-                        "}";
-                updateView(qrContent);
+                Toast.makeText(this, "QR content was null.", Toast.LENGTH_LONG).show();
+                return;
             } else {
                 qrContent = extras.getString("qrContent");
-                updateView(qrContent);
+                //verify qr here
+                if (isQRFormattedCorrectly(qrContent)) {
+                    updateView(qrContent);
+                }
             }
         } else {
             qrContent= (String) savedInstanceState.getSerializable("qrContent");
@@ -93,10 +78,6 @@ public class ConfirmTransactionActivity extends AppCompatActivity {
         });
     }
 
-    private JSONObject getJSONObj (String json)throws JSONException {
-        return (JSONObject) new JSONTokener(json).nextValue();
-    }
-
     private void updateView(String qrContent) {
         try {
             JSONObject qrJSON = getJSONObj(qrContent);
@@ -132,5 +113,4 @@ public class ConfirmTransactionActivity extends AppCompatActivity {
             Log.v(TAG, "JSONException:: " + je);
         }
     }
-
 }
