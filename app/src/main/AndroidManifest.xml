@@ -4,7 +4,7 @@
           package="io.scryp.scryp"
     >
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -16,15 +16,15 @@
         <activity
             android:name=".QrActivity"
             android:label="@string/title_activity_qr"
-            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             >
         </activity>
         <activity
             android:name=".ConfirmTransactionActivity"
             android:label="@string/title_activity_confirm_transaction"
-            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             >
         </activity>
         <activity
@@ -35,20 +35,16 @@
         <activity
             android:name=".TransactionCompleteActivity"
             android:label="@string/title_activity_transaction_complete"
-            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             >
         </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
 
         <service
@@ -56,6 +52,14 @@
             android:exported="false"
             >
         </service>
+
+        <activity android:name=".Web3JDemo">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
