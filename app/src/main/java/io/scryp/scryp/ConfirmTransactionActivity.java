@@ -15,11 +15,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import static io.scryp.scryp.MainActivity.PREFS_NAME;
-import static io.scryp.scryp.QRUtilities.*;
+import static io.scryp.scryp.QRUtilities.getJSONObj;
+import static io.scryp.scryp.QRUtilities.isQRFormattedCorrectly;
 
 public class ConfirmTransactionActivity extends AppCompatActivity {
     private static final String TAG = "Scryp";
     private float scryp_price = 0;
+    private boolean debug = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,29 @@ public class ConfirmTransactionActivity extends AppCompatActivity {
             if(extras == null) {
                 qrContent = null;
                 Toast.makeText(this, "QR content was null.", Toast.LENGTH_LONG).show();
-                return;
+                if (debug) {
+                    qrContent = "{\n" +
+                            "  \"deal\": {\n" +
+                            "    \"id\": \"123xyz\",\n" +
+                            "    \"total\": \"4.50\",\n" +
+                            "    \"usd_amount\": \"2.50\",\n" +
+                            "    \"scryp_amount\": \"2.00\",\n" +
+                            "    \"items\": {\n" +
+                            "      \"item_0\": {\n" +
+                            "        \"name\": \"16oz. Latte\"\n" +
+                            "      }\n" +
+                            "    }\n" +
+                            "  },\n" +
+                            "  \"recipient\": {\n" +
+                            "    \"id\": \"456zyx\",\n" +
+                            "    \"name\": \"Local Coffee Co.\"\n" +
+                            "  }\n" +
+                            "}";
+                    updateView(qrContent);
+                }
+                else {
+                    return;
+                }
             } else {
                 qrContent = extras.getString("qrContent");
                 //verify qr here

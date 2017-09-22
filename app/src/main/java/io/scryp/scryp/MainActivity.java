@@ -1,20 +1,14 @@
 package io.scryp.scryp;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,6 +20,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "MyPrefsFile";
+    public static final String TAG = "Scryp";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Restore preferences
+        // Start intentservice to get balance of address from blockchain
+        EthereumService.startActionGetBalance(this);
+        // Load wallet
+        // Get balance of address
+        // Update balance variable
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         float balance = settings.getFloat("scrypBalance", 44);
 
@@ -49,11 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
         // finally change the color
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorBlack));
-
-        TextView balanceTextView = (TextView) findViewById(R.id.balance);
-        Resources res = getResources();
-        String balanceText = res.getString(R.string.scryp_amount_text, balance);
-        balanceTextView.setText(balanceText);
 
         Button scanADealButton = (Button) findViewById(R.id.scanADeal);
         scanADealButton.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     Snackbar sb = Snackbar.make(cl, message, Snackbar.LENGTH_SHORT);
                     sb.show();
                 }
-                balanceTextView.setText(R.string.scrypSymbol + String.valueOf(balance));
+                //balanceTextView.setText(R.string.scrypSymbol + String.valueOf(balance));
             }
         }
     }
@@ -106,6 +101,10 @@ public class MainActivity extends AppCompatActivity {
         Resources res = getResources();
         String balanceText = res.getString(R.string.scryp_amount_text, 99f);
         balanceTextView.setText(balanceText);
+    }
+
+    public static String formatScrypBalance(String balance) {
+        return "$c" + balance;
     }
 
 }
