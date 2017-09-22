@@ -26,7 +26,7 @@ public class TransactionCompleteActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.paymentStatus);
         setSupportActionBar(toolbar);
-        hideSuccessContent();
+        showSuccessContent();
 
         Intent i = getIntent();
         transactionAmount = i.getFloatExtra("scrypPrice", 0);

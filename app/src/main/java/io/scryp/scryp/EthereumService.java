@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.web3j.abi.datatypes.Address;
@@ -46,19 +48,14 @@ public class EthereumService {
     private static final String TAG = "Scryp";
 
     public static final String GET_BALANCE = "io.scryp.scryp.action.GET_BALANCE";
-
-    public static final String BROADCAST_ACTION = "io.scryp.scryp.action.BROADCAST";
-    public static final String RESPONSE_STATUS = "io.scryp.scryp.action.STATUS";
-
-    private static final String INPUT_ADDRESS = "io.scryp.scryp.extra.INPUT_ADDRESS";
-    private static final String OUTPUT_ADDRESS = "io.scryp.scryp.extra.OUTPUT_ADDRESS";
-    private static final String VALUE = "io.scryp.scryp.extra.VALUE";
-    public static final String ETH_METHOD = "io.scryp.scryp.extra.ETH_METHOD" ;
-
-    //private static final String BLOCK_CYPHER_TOKEN = new BlockCypher().TOKEN;
+    public static final String TRANSFER = "io.scryp.scryp.action.TRANSFER";
 
     public static void startActionGetBalance(Activity a) {
         new Web3JAsyncTask(a).execute(GET_BALANCE);
+    }
+
+    public static void startActionTransfer() {
+        new Web3JAsyncTask().execute(TRANSFER);
     }
 }
 
@@ -68,6 +65,10 @@ class Web3JAsyncTask extends AsyncTask<String, Void, BigInteger > {
     private Activity a;
     static final BigInteger GAS_PRICE = BigInteger.valueOf(20_000_000_000L);
     static final BigInteger GAS_LIMIT = BigInteger.valueOf(4_300_000);
+
+    public Web3JAsyncTask() {
+
+    }
 
     public Web3JAsyncTask(Activity a) {
         this.a = a;
@@ -99,7 +100,7 @@ class Web3JAsyncTask extends AsyncTask<String, Void, BigInteger > {
             Address mintAddress = new Address(credentials.getAddress());
 
             //Transfers 1 Scryp from "Mint" to "Merchant"
-            if (stuff[0].equals("transfer")) {
+            if (stuff[0].equals(EthereumService.TRANSFER)) {
 
                 BigInteger merchantBalance = getScrypBalance(contract, merchant);
                 Log.v(TAG, "Merchant balance: " + merchantBalance.toString());
@@ -108,7 +109,7 @@ class Web3JAsyncTask extends AsyncTask<String, Void, BigInteger > {
                 Log.v(TAG, "Mint balance: " + mintBalanceAfter.toString());
                 BigInteger merchantBalanceAfter = getScrypBalance(contract, merchant);
                 Log.v(TAG, "Merchant balance: " + merchantBalanceAfter.toString());
-                return BigInteger.valueOf(0);
+                return BigInteger.valueOf(1);
             }
             else if (stuff[0].equals(EthereumService.GET_BALANCE)) {
                 Log.v(TAG, "Getting balance");
@@ -199,8 +200,12 @@ class Web3JAsyncTask extends AsyncTask<String, Void, BigInteger > {
     protected void onPostExecute(BigInteger result) {
         if (result != null) {
             Log.v(TAG, "Result...balance is: " + result.toString());
-            TextView balance = (TextView) a.findViewById(R.id.balance);
-            balance.setText(formatScrypBalance(result.toString()));
+            if (a != null) {
+                TextView balance = (TextView) a.findViewById(R.id.balance);
+                ProgressBar progressBar = (ProgressBar) a.findViewById(R.id.progressBar1);
+                progressBar.setVisibility(View.INVISIBLE);
+                balance.setText(formatScrypBalance(result.toString()));
+            }
         }
         else {
             Log.v(TAG, "Result is null");

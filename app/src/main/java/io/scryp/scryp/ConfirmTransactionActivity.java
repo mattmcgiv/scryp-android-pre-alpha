@@ -76,19 +76,12 @@ public class ConfirmTransactionActivity extends AppCompatActivity {
 
         payButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // We need an Editor object to make preference changes.
-                // All objects are from android.context.Context
-                SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-                float balance = settings.getFloat("scrypBalance", 44);
-                float newBalance = balance - scryp_price;
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putFloat("scrypBalance", newBalance);
-                // Commit the edits!
-                editor.commit();
-
+                //Call Ethereum transfer function
+                EthereumService.startActionTransfer();
+                Log.v(TAG, "Launching intent");
                 Intent intent = new Intent(v.getContext(), TransactionCompleteActivity.class);
                 intent.putExtra("scrypPrice", scryp_price);
-                v.getContext().startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                v.getContext().startActivity(intent);
             }
         });
 

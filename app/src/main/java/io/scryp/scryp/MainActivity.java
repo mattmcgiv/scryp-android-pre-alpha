@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
         // Update balance variable
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         float balance = settings.getFloat("scrypBalance", 44);
+
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        progressBar.setVisibility(View.VISIBLE);
 
         Window window = this.getWindow();
 
