@@ -15,23 +15,20 @@ The latest version of Android Studio for working on the source code.
 
 A step by step series of examples that tell you have to get a development env running
 
-Say what the step will be
+Clone the repo
 
 ```
-Give the example
+https://github.com/mattmcgiv/scryp-android-pre-alpha.git
 ```
 
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
+1. Install Android Studio
+2. Open Android Studio
+3. Import project
+4. Run App on physical device (recommended for QR scanning) or emulator
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+Tests are run through the Android Studio interface as explained in the [Android developer guide](https://developer.android.com/studio/test/index.html#run_a_test).
 
 ## Deployment
 
@@ -44,12 +41,11 @@ The app is deployed on the Google Play store in a closed-alpha. Closed-alpha mea
 * [Infura](https://infura.io) - Remote Ethereum client
 
 ## Contributing
-TODO: add the contributing link based off of forked gist
 Please read [CONTRIBUTING.md](#) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
 
 ## Authors
 
@@ -57,7 +53,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+The license for this app is TBD.
 
 ## Acknowledgements
 * **Billie Thompson** - *Published the template on which this README is based* - [PurpleBooth](https://github.com/PurpleBooth)
