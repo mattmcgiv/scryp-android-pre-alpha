@@ -41,7 +41,7 @@ The app is deployed on the Google Play store in a closed-alpha. Closed-alpha mea
 * [Infura](https://infura.io) - Remote Ethereum client
 
 ## Contributing
-Please read [CONTRIBUTING.md](#) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](https://github.com/mattmcgiv/scryp-android-pre-alpha/blob/readme/CONTRIBUTING.MD) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
