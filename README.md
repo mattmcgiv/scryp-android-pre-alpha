@@ -6,10 +6,10 @@ Redeem merchant offers utilizing a cryptocurrency built on Ethereum.
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-
 ### Prerequisites
 
-The latest version of Android Studio for working on the source code.
+* The latest version of Android Studio for working on the source code.
+* Target device should be Android 5.0 (LOLLIPOP) or higher (aka SDK/API Level: 21 or higher)
 
 ### Installing
 
@@ -18,7 +18,7 @@ A step by step series of examples that tell you have to get a development env ru
 Clone the repo
 
 ```
-https://github.com/mattmcgiv/scryp-android-pre-alpha.git
+git clone https://github.com/mattmcgiv/scryp-android-pre-alpha.git
 ```
 
 1. Install Android Studio
