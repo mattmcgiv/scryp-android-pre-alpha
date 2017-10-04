@@ -50,7 +50,7 @@ We use [SemVer](http://semver.org/) for versioning.
 ## Authors
 
 * **Matt McGivney** - *Initial work* - [Github link](https://github.com/mattmcgiv)
-* **The Scryp Cooperative** - *<3* - [Scryp.io](https://scryp.io)
+* **The Scryp Cooperative** - *:sparkles:* - [Scryp.io](https://scryp.io)
 
 ## License
 
