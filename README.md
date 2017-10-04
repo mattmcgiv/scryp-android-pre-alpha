@@ -45,7 +45,7 @@ Please read [CONTRIBUTING.md](https://github.com/mattmcgiv/scryp-android-pre-alp
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
+We use [SemVer](http://semver.org/) for versioning.
 
 ## Authors
 
@@ -53,7 +53,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## License
 
-The license for this app is TBD.
+The license for this app is [MIT](https://opensource.org/licenses/MIT).
 
 ## Acknowledgements
 * **Billie Thompson** - *Published the template on which this README is based* - [PurpleBooth](https://github.com/PurpleBooth)
