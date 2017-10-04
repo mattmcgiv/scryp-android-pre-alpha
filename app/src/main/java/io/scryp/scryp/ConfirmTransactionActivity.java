@@ -77,7 +77,8 @@ public class ConfirmTransactionActivity extends AppCompatActivity {
         payButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Call Ethereum transfer function
-                EthereumService.startActionTransfer();
+                //todo replace hard-coded wallet with reference to path from somewhere else
+                EthereumService.startActionTransfer("/data/user/0/io.scryp.scryp/files/UTC--2017-09-13T10-32-42.056--22b07cfd25cf068a444364e8531be5fac8af7ef1.json");
                 Log.v(TAG, "Launching intent");
                 Intent intent = new Intent(v.getContext(), TransactionCompleteActivity.class);
                 intent.putExtra("scrypPrice", scryp_price);

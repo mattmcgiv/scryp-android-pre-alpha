@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -50,12 +51,18 @@ public class EthereumService {
     public static final String GET_BALANCE = "io.scryp.scryp.action.GET_BALANCE";
     public static final String TRANSFER = "io.scryp.scryp.action.TRANSFER";
 
-    public static void startActionGetBalance(Activity a) {
-        new Web3JAsyncTask(a).execute(GET_BALANCE);
+    private Activity a;
+
+    public EthereumService(Activity a) {
+        this.a = a;
     }
 
-    public static void startActionTransfer() {
-        new Web3JAsyncTask().execute(TRANSFER);
+    public static void startActionGetBalance(Activity a, String walletPath) {
+        new Web3JAsyncTask(a, walletPath).execute(GET_BALANCE);
+    }
+    //TODO implement walletPath
+    public static void startActionTransfer(String walletPath) {
+        new Web3JAsyncTask(walletPath).execute(TRANSFER);
     }
 }
 
@@ -65,13 +72,14 @@ class Web3JAsyncTask extends AsyncTask<String, Void, BigInteger > {
     private Activity a;
     static final BigInteger GAS_PRICE = BigInteger.valueOf(20_000_000_000L);
     static final BigInteger GAS_LIMIT = BigInteger.valueOf(4_300_000);
+    private String walletPath = "";
 
-    public Web3JAsyncTask() {
-
+    public Web3JAsyncTask(String walletPath) {
+        this.walletPath = walletPath;
     }
-
-    public Web3JAsyncTask(Activity a) {
+    public Web3JAsyncTask(Activity a, String walletPath) {
         this.a = a;
+        this.walletPath = walletPath;
     }
 
     protected BigInteger doInBackground(String... stuff) {
@@ -80,7 +88,7 @@ class Web3JAsyncTask extends AsyncTask<String, Void, BigInteger > {
         try {
             //Load our wallet
             Log.v(TAG, "Loading wallet");
-            Credentials credentials = WalletUtils.loadCredentials("foo", "/data/user/0/io.scryp.scryp/files/UTC--2017-09-13T10-32-42.056--22b07cfd25cf068a444364e8531be5fac8af7ef1.json");
+            Credentials credentials = WalletUtils.loadCredentials("foo", this.walletPath);
             Log.v(TAG, "Credential address: " + credentials.getAddress());
 
             //A nonce is required for transactions on the blockchain
@@ -210,18 +218,5 @@ class Web3JAsyncTask extends AsyncTask<String, Void, BigInteger > {
         else {
             Log.v(TAG, "Result is null");
         }
-    }
-
-    protected String createWalletGetFileName() {
-        try {
-            String fileName = WalletUtils.generateNewWalletFile(
-                    "your password",
-                    new File("/data/user/0/io.scryp.scryp/files/UTC--2017-09-13T10-32-42.056--22b07cfd25cf068a444364e8531be5fac8af7ef1.json"),
-                    true);
-            return fileName;
-        } catch (Exception e) {
-            Log.e(TAG, "Creating wallet file failed: " + e.getMessage());
-        }
-        return null;
     }
 }

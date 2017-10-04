@@ -1,5 +1,6 @@
 package io.scryp.scryp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -9,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,9 +21,14 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.web3j.crypto.WalletUtils;
+
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "MyPrefsFile";
     public static final String TAG = "Scryp";
+    public static final String WALLET_PATH = "io.scryp.scryp.info.wallet_path";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +38,21 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.scrypPreAlphaText);
         setSupportActionBar(toolbar);
 
+        String walletPath = null;
+
+        //Load the wallet path from SharedStorage
+        walletPath = getWalletPath();
+
+//        walletPath = null;
+        //If the wallet path couldn't resolve, create a new wallet
+        if (walletPath == null) {
+            startActivity(new Intent(this, NewWalletActivity.class));
+        }
+
         // Restore preferences
         // Start intentservice to get balance of address from blockchain
-        EthereumService.startActionGetBalance(this);
+        //TODO get wallet path
+        EthereumService.startActionGetBalance(this, walletPath);
         // Load wallet
         // Get balance of address
         // Update balance variable
@@ -111,6 +130,10 @@ public class MainActivity extends AppCompatActivity {
         return "$c" + balance;
     }
 
+    public String getWalletPath() {
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        return sharedPref.getString(WALLET_PATH, null);
+    }
 }
 
 
