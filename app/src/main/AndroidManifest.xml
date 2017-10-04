@@ -45,20 +45,17 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             >
-        </activity>
-
-        <service
-            android:name=".EthereumService"
-            android:exported="false"
-            >
-        </service>
-
-        <activity android:name=".Web3JDemo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".NewWalletActivity"
+                  android:label="Generate a wallet"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:windowSoftInputMode="stateVisible">
         </activity>
     </application>
 
