@@ -4,7 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static io.scryp.scryp.QRUtilities.isQRFormattedCorrectly;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Matt on 8/24/2017.
