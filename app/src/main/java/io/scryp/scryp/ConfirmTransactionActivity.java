@@ -1,5 +1,6 @@
 package io.scryp.scryp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,11 +9,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.web3j.abi.datatypes.generated.Uint256;
+
+import java.math.BigInteger;
 
 import static io.scryp.scryp.MainActivity.PREFS_NAME;
 import static io.scryp.scryp.QRUtilities.getJSONObj;
@@ -30,6 +35,8 @@ public class ConfirmTransactionActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.confirmPaymentText);
         setSupportActionBar(toolbar);
+        ProgressBar progressBar = (ProgressBar) ConfirmTransactionActivity.this.findViewById(R.id.progressBar2);
+        progressBar.setVisibility(View.INVISIBLE);
         String qrContent;
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -78,11 +85,18 @@ public class ConfirmTransactionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Call Ethereum transfer function
                 //todo replace hard-coded wallet with reference to path from somewhere else
-                EthereumService.startActionTransfer("/data/user/0/io.scryp.scryp/files/UTC--2017-09-13T10-32-42.056--22b07cfd25cf068a444364e8531be5fac8af7ef1.json");
-                Log.v(TAG, "Launching intent");
-                Intent intent = new Intent(v.getContext(), TransactionCompleteActivity.class);
-                intent.putExtra("scrypPrice", scryp_price);
-                v.getContext().startActivity(intent);
+                //todo "scryp_price" from json here to pass to transfer method
+                String walletPath = getWalletPath();
+                String walletPassword = getWalletPassword();
+                BigInteger convertedAmount = new BigInteger(String.valueOf((int) scryp_price*100));
+                ProgressBar progressBar = (ProgressBar) ConfirmTransactionActivity.this.findViewById(R.id.progressBar2);
+                progressBar.setVisibility(View.VISIBLE);
+                Button payButton = (Button) ConfirmTransactionActivity.this.findViewById(R.id.payButton);
+                payButton.setVisibility(View.INVISIBLE);
+                EthereumService.startActionTransfer(ConfirmTransactionActivity.this,
+                                                    walletPath,
+                                                    walletPassword,
+                                                    new Uint256(convertedAmount));
             }
         });
 
@@ -130,5 +144,19 @@ public class ConfirmTransactionActivity extends AppCompatActivity {
         } catch (JSONException je) {
             Log.v(TAG, "JSONException:: " + je);
         }
+    }
+
+    private String getWalletPath() {
+        SharedPreferences sharedPref = this.getSharedPreferences("walletInfo", Context.MODE_PRIVATE);
+        String result = sharedPref.getString(MainActivity.WALLET_PATH, null);
+        Log.v(TAG, "Wallet path in confirmation activity: " + result);
+        return result;
+    }
+
+    private String getWalletPassword() {
+        SharedPreferences sharedPref = this.getSharedPreferences("walletInfo", Context.MODE_PRIVATE);
+        String result = sharedPref.getString(MainActivity.WALLET_PASSWORD, null);
+        Log.v(TAG, "Wallet password in confirmation activity: " + result);
+        return result;
     }
 }

@@ -34,16 +34,6 @@ import java.io.File;
 import java.math.BigInteger;
 import java.util.concurrent.Future;
 
-import static io.scryp.scryp.MainActivity.formatScrypBalance;
-
-/**
- * An {@link IntentService} subclass for handling asynchronous task requests in
- * a service on a separate handler thread.
- * <p>
- * TODO: Customize class - update intent actions, extra parameters and static
- * helper methods.
- */
-
 public class EthereumService {
 
     private static final String TAG = "Scryp";
@@ -57,29 +47,39 @@ public class EthereumService {
         this.a = a;
     }
 
-    public static void startActionGetBalance(Activity a, String walletPath) {
-        new Web3JAsyncTask(a, walletPath).execute(GET_BALANCE);
+    public static void startActionGetBalance(Activity a, String walletPath, String walletPassword) {
+        new Web3JAsyncTask(a, walletPath, walletPassword).execute(GET_BALANCE);
     }
-    //TODO implement walletPath
-    public static void startActionTransfer(String walletPath) {
-        new Web3JAsyncTask(walletPath).execute(TRANSFER);
+
+    public static void startActionTransfer(Activity a, String walletPath, String walletPassword, Uint256 amount) {
+        new Web3JAsyncTask(a, walletPath, walletPassword, amount).execute(TRANSFER);
     }
 }
 
 class Web3JAsyncTask extends AsyncTask<String, Void, BigInteger > {
     public final Address merchant = new Address("0xfb70456839B62ca7bA09a1fA9E5a553E5e36D4c4");
     final String TAG = "Scryp";
+    private Uint256 transferAmount = new Uint256(0);
     private Activity a;
     static final BigInteger GAS_PRICE = BigInteger.valueOf(20_000_000_000L);
     static final BigInteger GAS_LIMIT = BigInteger.valueOf(4_300_000);
     private String walletPath = "";
+    private String walletPassword = "";
 
-    public Web3JAsyncTask(String walletPath) {
+    public Web3JAsyncTask(Activity a, String walletPath, String walletPassword, Uint256 amount) {
+        Log.v(TAG, "path: " + walletPath);
+        Log.v(TAG, "pass: " + walletPassword);
         this.walletPath = walletPath;
-    }
-    public Web3JAsyncTask(Activity a, String walletPath) {
+        this.walletPassword = walletPassword;
+        this.transferAmount = amount;
         this.a = a;
+    }
+    public Web3JAsyncTask(Activity a, String walletPath, String walletPassword) {
+        this.a = a;
+        Log.v(TAG, "path: " + walletPath);
+        Log.v(TAG, "pass: " + walletPassword);
         this.walletPath = walletPath;
+        this.walletPassword = walletPassword;
     }
 
     protected BigInteger doInBackground(String... stuff) {
@@ -88,7 +88,11 @@ class Web3JAsyncTask extends AsyncTask<String, Void, BigInteger > {
         try {
             //Load our wallet
             Log.v(TAG, "Loading wallet");
-            Credentials credentials = WalletUtils.loadCredentials("foo", this.walletPath);
+            Credentials credentials = WalletUtils.loadCredentials(this.walletPassword, this.walletPath);
+
+            //todo this is for sending scryp from central mint only:
+            //Credentials credentials = WalletUtils.loadCredentials("foo",
+//                                                                "/data/user/0/io.scryp.scryp/files/UTC--2017-09-13T10-32-42.056--22b07cfd25cf068a444364e8531be5fac8af7ef1.json");
             Log.v(TAG, "Credential address: " + credentials.getAddress());
 
             //A nonce is required for transactions on the blockchain
@@ -110,14 +114,21 @@ class Web3JAsyncTask extends AsyncTask<String, Void, BigInteger > {
             //Transfers 1 Scryp from "Mint" to "Merchant"
             if (stuff[0].equals(EthereumService.TRANSFER)) {
 
+                //todo this is for sending scryp from central mint only:
+//                transferScryp(contract, new Address("0x5f33df734102854344b19afad827986945039932"), new Uint256(40));
+//                return new BigInteger("1");
+
+
                 BigInteger merchantBalance = getScrypBalance(contract, merchant);
                 Log.v(TAG, "Merchant balance: " + merchantBalance.toString());
-                transferScryp(contract, merchant, new Uint256(1));
+                transferScryp(contract, merchant, transferAmount);
                 BigInteger mintBalanceAfter = getScrypBalance(contract, mintAddress);
                 Log.v(TAG, "Mint balance: " + mintBalanceAfter.toString());
                 BigInteger merchantBalanceAfter = getScrypBalance(contract, merchant);
-                Log.v(TAG, "Merchant balance: " + merchantBalanceAfter.toString());
-                return BigInteger.valueOf(1);
+                Log.v(TAG, "Merchant balance after: " + merchantBalanceAfter.toString());
+                BigInteger mintBalance = getScrypBalance(contract, mintAddress);
+                Log.v(TAG, "Mint balance after: " + mintBalance.toString());
+                return mintBalance;
             }
             else if (stuff[0].equals(EthereumService.GET_BALANCE)) {
                 Log.v(TAG, "Getting balance");
@@ -141,26 +152,6 @@ class Web3JAsyncTask extends AsyncTask<String, Void, BigInteger > {
                 );
                 Log.v(TAG, "Contract address is: " + deployableContract.get().getContractAddress());
             }
-            //Raw transfer of Ethereum
-            else if (false) {
-                //create transaction
-                Log.v(TAG, "Create transaction");
-                RawTransaction rawTransaction  = RawTransaction.createEtherTransaction(
-                        nonce, GAS_PRICE, GAS_LIMIT, merchant.toString(), value);
-
-                //encode and sign transaction
-                Log.v(TAG, "Encode and sign transaction");
-                byte[] signedMessage = TransactionEncoder.signMessage(rawTransaction, credentials);
-                String hexValue = Numeric.toHexString(signedMessage);
-
-                //send
-                Log.v(TAG, "Send transaction");
-                EthSendTransaction ethSendTransaction = web3.ethSendRawTransaction(hexValue).sendAsync().get();
-                Log.v(TAG, "Get transaction hash");
-                String transactionHash = ethSendTransaction.getTransactionHash();
-                Log.v(TAG, "" + transactionHash);
-            }
-
         } catch (Exception e) {
             e.printStackTrace();
             Log.v(TAG, "Exception: " + e.getMessage());
@@ -208,11 +199,23 @@ class Web3JAsyncTask extends AsyncTask<String, Void, BigInteger > {
     protected void onPostExecute(BigInteger result) {
         if (result != null) {
             Log.v(TAG, "Result...balance is: " + result.toString());
-            if (a != null) {
-                TextView balance = (TextView) a.findViewById(R.id.balance);
-                ProgressBar progressBar = (ProgressBar) a.findViewById(R.id.progressBar1);
-                progressBar.setVisibility(View.INVISIBLE);
-                balance.setText(formatScrypBalance(result.toString()));
+            if (this.a != null) {
+                Log.v(TAG, "Launching intent");
+//                Log.v(TAG, );
+                if (this.transferAmount.getValue().toString().equals("0")) {
+                    Log.v(TAG, "Just balance");
+                    //if we're just getting the balance, go home
+                    Intent intent = new Intent(a, MainActivity.class);
+                    intent.putExtra("balance", result.toString());
+                    a.startActivity(intent);
+                } else {
+                    Log.v(TAG, "Else");
+                    Intent intent = new Intent(a, TransactionCompleteActivity.class);
+                    BigInteger converted = this.transferAmount.getValue();
+                    int scrypTwoDecimal = converted.intValue()/100;
+                    intent.putExtra("scrypPrice", scrypTwoDecimal);
+                    a.startActivity(intent);
+                }
             }
         }
         else {

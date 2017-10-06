@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -21,6 +22,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.web3j.crypto.Credentials;
 import org.web3j.crypto.WalletUtils;
 
 import java.io.File;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "MyPrefsFile";
     public static final String TAG = "Scryp";
     public static final String WALLET_PATH = "io.scryp.scryp.info.wallet_path";
+    public static final String WALLET_PASSWORD = "io.scryp.scryp.info.wallet_password";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,24 +46,26 @@ public class MainActivity extends AppCompatActivity {
         //Load the wallet path from SharedStorage
         walletPath = getWalletPath();
 
-//        walletPath = null;
         //If the wallet path couldn't resolve, create a new wallet
         if (walletPath == null) {
             startActivity(new Intent(this, NewWalletActivity.class));
         }
 
-        // Restore preferences
-        // Start intentservice to get balance of address from blockchain
-        //TODO get wallet path
-        EthereumService.startActionGetBalance(this, walletPath);
-        // Load wallet
-        // Get balance of address
-        // Update balance variable
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        float balance = settings.getFloat("scrypBalance", 44);
+        Intent i = this.getIntent();
+        String balance = i.getStringExtra("balance");
 
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
-        progressBar.setVisibility(View.VISIBLE);
+        if (balance != null) {
+            TextView balanceTextView = (TextView) findViewById(R.id.balance);
+            Resources res = getResources();
+            String balanceText = res.getString(R.string.scryp_amount_text, String.valueOf(balance));
+            balanceTextView.setText(balanceText);
+        }
+        else {
+            Log.v(TAG, "getWalletPassword : " + getWalletPassword());
+            EthereumService.startActionGetBalance(this, getWalletPath(), getWalletPassword());
+            ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+            progressBar.setVisibility(View.VISIBLE);
+        }
 
         Window window = this.getWindow();
 
@@ -90,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     Snackbar sb = Snackbar.make(cl, message, Snackbar.LENGTH_SHORT);
                     sb.show();
                 }
-                //balanceTextView.setText(R.string.scrypSymbol + String.valueOf(balance));
+
             }
         }
     }
@@ -106,11 +111,27 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.action_replenish:
-                replenishBalance();
+            case R.id.action_showAddress:
+                showAddress();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void showAddress() {
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        progressBar.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(this, AddressActivity.class);
+        String path = getWalletPath();
+        String password = getWalletPassword();
+        try {
+            Credentials credentials = WalletUtils.loadCredentials(password, path);
+            Log.v(TAG, "Credential address: " + credentials.getAddress());
+            intent.putExtra("address", credentials.getAddress());
+            startActivity(intent);
+        } catch (Exception e) {
+            Log.v(TAG, e.getMessage());
         }
     }
 
@@ -130,9 +151,14 @@ public class MainActivity extends AppCompatActivity {
         return "$c" + balance;
     }
 
-    public String getWalletPath() {
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+    private String getWalletPath() {
+        SharedPreferences sharedPref = this.getSharedPreferences("walletInfo", Context.MODE_PRIVATE);
         return sharedPref.getString(WALLET_PATH, null);
+    }
+
+    private String getWalletPassword() {
+        SharedPreferences sharedPref = this.getSharedPreferences("walletInfo", Context.MODE_PRIVATE);
+        return sharedPref.getString(WALLET_PASSWORD, null);
     }
 }
 

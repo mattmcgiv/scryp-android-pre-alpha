@@ -116,5 +116,17 @@
         android:textAppearance="@style/scrypLabelText"
         />
 
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"
+        android:layout_alignTop="@+id/cancelButton"
+        android:layout_toEndOf="@+id/cancelButton"
+        android:layout_marginStart="32dp"
+        ></ProgressBar>
 
 </RelativeLayout>
