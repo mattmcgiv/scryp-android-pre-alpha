@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Load the wallet path from SharedStorage
         walletPath = getWalletPath();
-
+        //TODO make sure the wallet path always resolves to the pre-loaded wallet file. SECURITY CONCERNS?
+        //TODO https://developer.android.com/training/articles/security-tips.html
         //If the wallet path couldn't resolve, create a new wallet
         if (walletPath == null) {
             startActivity(new Intent(this, NewWalletActivity.class));

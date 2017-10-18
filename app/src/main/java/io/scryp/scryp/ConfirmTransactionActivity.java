@@ -84,7 +84,6 @@ public class ConfirmTransactionActivity extends AppCompatActivity {
         payButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Call Ethereum transfer function
-                //todo replace hard-coded wallet with reference to path from somewhere else
                 //todo "scryp_price" from json here to pass to transfer method
                 String walletPath = getWalletPath();
                 String walletPassword = getWalletPassword();
